@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = GeneratorPage();
       case 1:
-        page = Placeholder();
+        page = FavouritesPage();
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -172,6 +172,22 @@ class BigCard extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Text(pair.asLowerCase, style: style),
       ),
+    );
+  }
+}
+
+class FavouritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    List<Widget> favouritesNodes = appState.favourites
+        .map((favourite) => Text(favourite.asLowerCase))
+        .toList();
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: favouritesNodes,
     );
   }
 }
