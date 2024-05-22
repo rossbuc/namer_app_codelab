@@ -43,6 +43,7 @@ class MyAppState extends ChangeNotifier {
     } else {
       favourites.add(current);
     }
+    notifyListeners();
   }
 }
 
@@ -182,12 +183,19 @@ class FavouritesPage extends StatelessWidget {
     var appState = context.watch<MyAppState>();
 
     List<Widget> favouritesNodes = appState.favourites
-        .map((favourite) => Text(favourite.asLowerCase))
+        .map((favourite) => ListTile(
+              leading: Icon(Icons.favorite),
+              title: Text(favourite.asLowerCase),
+            ))
         .toList();
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: favouritesNodes,
+    return ListView(
+      children: [
+        Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text('You have ${appState.favourites.length} favourites')),
+        ...favouritesNodes
+      ],
     );
   }
 }
